@@ -1,51 +1,44 @@
-def processRequest(req):
+import numpy as np
+from flask import Flask, request, make_response
+import json
+import pickle
 
+app = Flask(__name__)
+model = pickle.load(open('intent_model.sav', 'rb'))
+
+@app.route('/')
+def hello():
+    return 'Hello World. This is Neba, trying out a Medical Prediction Application.'
+
+# geting and sending response to dialogflow
+@app.route('/webhook', methods=['POST'])
+def webhook():
+
+    req = request.get_json(silent=True, force=True)
+    res = processRequest(req)
+    res = json.dumps(res)
+
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r  #Final Response sent to DialogFlow
+
+def processRequest(req):    # This method processes the incoming request 
 
     result = req.get("queryResult")
-    
-    #Fetching the data points
     parameters = result.get("parameters")
-    chat_text=parameters.get("text")
+    symptom=parameters.get("symptom")
     
+    intent = result.get("intent").get('displayName')
     
-    
-    
-    
-    def cleaning_text(text):
-    stop_words = stopwords.words("english")
+    if (intent=='DataYes'):
+        prediction = model.predict([[symptom]])
+        output = round(prediction[0], 2)       
+       
+        fulfillmentText= "The right medical intent of what you are currently experiencing is:  {} !".format(output)
 
-    # removing urls from tweets
-    text = re.sub(r'http\S+', " ", text)    
-    # remove mentions
-    text = re.sub(r'@\w+',' ',text)         
-    # removing hastags
-    text = re.sub(r'#\w+', ' ', text)       
-    # removing html tags
-    text = re.sub('r<.*?>',' ', text)       
-    
-    # removing stopwords stopwords 
-    text = text.split()
-    text = " ".join([word for word in text if not word in stop_words])
-
-    for punctuation in string.punctuation:
-        text = text.replace(punctuation, "")
-    
-    return text
-    
-    df['Text'] = df['text'].apply(lambda x: cleaning_text(x)) 
-    new_text = cleaning_text(chat_text)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   
+        return {
+            "fulfillmentText": fulfillmentText
+        }
 
 if __name__ == '__main__':
     app.run()
