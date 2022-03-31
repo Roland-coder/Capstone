@@ -4,6 +4,8 @@ import json
 import pickle
 
 app = Flask(__name__)
+with open('tokenizer.pickle', 'rb') as handle:
+    tokenizer = pickle.load(handle)
 model = pickle.load(open('intent_model.sav', 'rb'))
 
 @app.route('/')
