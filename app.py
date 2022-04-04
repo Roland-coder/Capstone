@@ -2,6 +2,7 @@ import numpy as np
 from flask import Flask, request, make_response
 import json
 import pickle
+from spacy.lang.en.stop_words import STOP_WORDS
 from nltk.stem import WordNetLemmatizer 
 
 
