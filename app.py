@@ -69,8 +69,8 @@ def processRequest(req):    # This method processes the incoming request
     if (intent=='predict-intent'):
 #         for_pred = [clean_txt(symptom)]
         
-        prediction = model.predict([[symptom]])[0]
-        output = round(prediction[0], 2)       
+        output = model.predict([symptom])[0]
+#         output = round(prediction[0], 2)       
        
         fulfillmentText= "The right medical intent of what you are currently experiencing is:  {} !".format(output)
 
