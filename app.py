@@ -3,6 +3,9 @@ from flask import Flask, request, make_response
 import json
 import pickle
 
+from flask_cors import cross_origin
+
+
 
 app = Flask(__name__)
 # Data preparation, cleaning the text in the dataset
@@ -38,6 +41,8 @@ def hello():
 
 # geting and sending response to dialogflow
 @app.route('/webhook', methods=['POST'])
+@cross_origin()
+
 def webhook():
 
     req = request.get_json(silent=True, force=True)
