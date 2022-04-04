@@ -30,7 +30,7 @@ def clean_txt(docs):
     combined_text = ' '.join(lem_words)
     return combined_text
 
-model = pickle.load(open('intent_model.sav', 'rb'))
+model = pickle.load(open('bagging_model', 'rb'))
 
 @app.route('/')
 def hello():
