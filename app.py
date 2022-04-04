@@ -61,7 +61,7 @@ def processRequest(req):    # This method processes the incoming request
     
     intent = result.get("intent").get('displayName')
     
-    if (intent=='DataYes'):
+    if (intent=='predict-intent'):
         for_pred = [clean_txt(symptom)]
         
         prediction = model.predict([[symptom]])[0]
