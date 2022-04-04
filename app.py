@@ -2,8 +2,8 @@ import numpy as np
 from flask import Flask, request, make_response
 import json
 import pickle
-from spacy.lang.en.stop_words import STOP_WORDS
-from nltk.stem import WordNetLemmatizer 
+# from spacy.lang.en.stop_words import STOP_WORDS
+# from nltk.stem import WordNetLemmatizer 
 
 
 from flask_cors import cross_origin
@@ -13,28 +13,28 @@ from flask_cors import cross_origin
 app = Flask(__name__)
 # Data preparation, cleaning the text in the dataset
 
-def clean_txt(docs):
+# def clean_txt(docs):
 
-    # 
-    lemmatizer = WordNetLemmatizer() 
+#     # 
+#     lemmatizer = WordNetLemmatizer() 
 
-    speech_words = nltk.word_tokenize(docs)
+#     speech_words = nltk.word_tokenize(docs)
 
-    lower_text = [w.lower() for w in speech_words]
+#     lower_text = [w.lower() for w in speech_words]
 
-    re_punc = re.compile('[%s]' % re.escape(string.punctuation))
+#     re_punc = re.compile('[%s]' % re.escape(string.punctuation))
     
-    stripped = [re_punc.sub('', w) for w in lower_text]
+#     stripped = [re_punc.sub('', w) for w in lower_text]
     
-    words = [word for word in stripped if word.isalpha()]
+#     words = [word for word in stripped if word.isalpha()]
     
-    words = [w for w in words if not w in  list(STOP_WORDS)]
+#     words = [w for w in words if not w in  list(STOP_WORDS)]
     
-    words = [word for word in words if len(word) > 2]
+#     words = [word for word in words if len(word) > 2]
     
-    lem_words = [lemmatizer.lemmatize(word) for word in words]
-    combined_text = ' '.join(lem_words)
-    return combined_text
+#     lem_words = [lemmatizer.lemmatize(word) for word in words]
+#     combined_text = ' '.join(lem_words)
+#     return combined_text
 
 model = pickle.load(open('bagging_model', 'rb'))
 
@@ -65,7 +65,7 @@ def processRequest(req):    # This method processes the incoming request
     intent = result.get("intent").get('displayName')
     
     if (intent=='predict-intent'):
-        for_pred = [clean_txt(symptom)]
+#         for_pred = [clean_txt(symptom)]
         
         prediction = model.predict([[symptom]])[0]
         output = round(prediction[0], 2)       
