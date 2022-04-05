@@ -6,6 +6,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, T
 import pickle
 from spacy.lang.en.stop_words import STOP_WORDS
 from nltk.stem import WordNetLemmatizer 
+import nltk
 
 
 from flask_cors import cross_origin
