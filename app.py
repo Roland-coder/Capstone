@@ -3,6 +3,7 @@ from flask import Flask, request, make_response
 import json
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 import re
+import string
 
 import pickle
 from spacy.lang.en.stop_words import STOP_WORDS
