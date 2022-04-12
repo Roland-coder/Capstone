@@ -86,7 +86,7 @@ def processRequest(req):    # This method processes the incoming request
         output = model.predict([symptom])[0]
 #         output = round(prediction[0], 2)       
        
-        fulfillmentText= "The right medical intent of what you are currently experiencing is:  {} !".format(output)
+        fulfillmentText= "The right medical intent of what you are currently experiencing is:  {} ! \n Do you wish you describe any other symtom ???".format(output)
 
         return {
             "fulfillmentText": fulfillmentText
