@@ -46,14 +46,15 @@ model = pickle.load(open('bagging_model', 'rb'))
 @app.route('/')
 def hello():
     return """
-    
-    <h1> Hello World. This is Neba, trying out a Medical Prediction Application.</h1>
-    <iframe
-    allow="microphone;"
-    width="350"
-    height="430"
-    src="https://console.dialogflow.com/api-client/demo/embedded/ebcc1be7-015e-469f-be2d-2836d3f4d572">
-    </iframe>
+    <div align= "center">
+        
+        <iframe
+        allow="microphone;"
+        width="350"
+        height="430"
+        src="https://console.dialogflow.com/api-client/demo/embedded/ebcc1be7-015e-469f-be2d-2836d3f4d572">
+        </iframe>
+    </div>
     
     """
 
@@ -86,7 +87,7 @@ def processRequest(req):    # This method processes the incoming request
         output = model.predict([symptom])[0]
 #         output = round(prediction[0], 2)       
        
-        fulfillmentText= "The right medical intent of what you are currently experiencing is:  {} ! \n Do you wish you describe any other symptom ???".format(output)
+        fulfillmentText= "The right medical intent of what you are currently experiencing is:  {} ! ".format(output)
 
         return {
             "fulfillmentText": fulfillmentText
