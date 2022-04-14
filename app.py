@@ -73,7 +73,7 @@ def login():
         else:
             msg = 'Incorrect Email or password'       
     
-    return render_template('index.html'msg=msg)
+    return render_template('index.html', msg=msg)
 
 @app.route('/home')
 def hello():
