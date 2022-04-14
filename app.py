@@ -17,8 +17,8 @@ import nltk
 
 from flask_cors import cross_origin
 # connection = mysql.connector.connect(host='ec2-34-207-12-160.compute-1.amazonaws.com',port='5432',
-                                     database='d90tl94u97uha4', user='wlnvcqrrmxbved', 
-                                     password='2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf')
+#                                      database='d90tl94u97uha4', user='wlnvcqrrmxbved', 
+#                                      password='2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf')
 
 
 
