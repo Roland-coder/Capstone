@@ -22,7 +22,7 @@ from flask_cors import cross_origin
 
 
 
-cursor=connection.cursor()
+# cursor=connection.cursor()
 app = Flask(__name__)
 app.secret_key = "super secret key"
 # Data preparation, cleaning the text in the dataset
