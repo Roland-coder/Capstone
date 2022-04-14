@@ -63,7 +63,6 @@ def regpage():
     return render_template('registration.html')
 
 @app.route('/login', methods =['GET','POST'])
-
 def login():
     print('trying to access the login method')
     msg =''
