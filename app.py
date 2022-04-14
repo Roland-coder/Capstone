@@ -73,7 +73,7 @@ def login():
         record = result.fetchone()
         if record:
             session['loggedin']=TRUE
-            session['username']=redord[1]
+            session['username']=record[1]
         
             return redirect(url_for('/home'))
         else:
@@ -86,6 +86,12 @@ def hello():
 #     return render_template('home.html',session['username'])
     return render_template('home.html')
 
+
+@app.route('/logout')
+def logout():
+    session.pop('loggedin',None)
+    session.pop('username',None)
+    return redirect(url_for('login'))
 # geting and sending response to dialogflow
 @app.route('/webhook', methods=['POST'])
 @cross_origin()
