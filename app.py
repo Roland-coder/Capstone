@@ -1,4 +1,5 @@
 import numpy as np
+import logging
 from flask import Flask, request, make_response,session,url_for
 import psycopg2
 import json
@@ -9,7 +10,8 @@ import os
 import re
 import string
 from sqlalchemy import create_engine
-
+from __future__ import print_function # In python 2.7
+import sys
 import pickle
 from spacy.lang.en.stop_words import STOP_WORDS
 from nltk.stem import WordNetLemmatizer 
@@ -64,13 +66,13 @@ def regpage():
 
 @app.route('/login', methods =['GET','POST'])
 def login():
-    print('trying to access the login method')
     msg =''
     if request.method == "POST":
         email = request.form['email']
         password = request.form['password']
         result = db.execute('SELECT * FROM users WHERE email=%s AND password = %s',(email,password))
         record = result.fetchone()
+        
         if record:
             session['loggedin']=TRUE
             session['username']=record[1]
@@ -78,7 +80,7 @@ def login():
             return redirect(url_for('/home'))
         else:
             msg = 'Incorrect Email or password'       
-    
+            print('did not find record', file=sys.stderr)
     return render_template('index.html', msg=msg)
 
 @app.route('/home')
