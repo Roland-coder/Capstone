@@ -10,7 +10,6 @@ import os
 import re
 import string
 from sqlalchemy import create_engine
-from __future__ import print_function # In python 2.7
 import sys
 import pickle
 from spacy.lang.en.stop_words import STOP_WORDS
