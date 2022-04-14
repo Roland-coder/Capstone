@@ -30,3 +30,4 @@ spacy==2.3.5
 nltk
 sklearn
 psycopg2
+mysql-connector-python
