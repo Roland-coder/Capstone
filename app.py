@@ -61,7 +61,7 @@ def homepage():
     return render_template('index.html')
 
 @app.route('/registration')
-def homepage():
+def regpage():
     return render_template('registration.html')
 
 @app.route('/login', methods =['GET','POST'])
