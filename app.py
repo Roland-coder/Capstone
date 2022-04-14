@@ -73,18 +73,7 @@ def login():
 
 @app.route('/home')
 def hello():
-    return """
-    <div align= "center">
-        
-        <iframe
-        allow="microphone;"
-        width="350"
-        height="430"
-        src="https://console.dialogflow.com/api-client/demo/embedded/ebcc1be7-015e-469f-be2d-2836d3f4d572">
-        </iframe>
-    </div>
-    
-    """
+    return render_template('home.html',session['username'])
 
 # geting and sending response to dialogflow
 @app.route('/webhook', methods=['POST'])
