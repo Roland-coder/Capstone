@@ -65,6 +65,7 @@ def regpage():
 @app.route('/login', methods =['GET','POST'])
 
 def login():
+    print('trying to access the login method')
     msg =''
     if request.method == "POST":
         email = request.form['email']
