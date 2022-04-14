@@ -1,5 +1,7 @@
 import numpy as np
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response,session,url_for
+from flask_session import Session
+import mysql.connector
 import json
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from flask import render_template, redirect
@@ -16,8 +18,11 @@ import nltk
 from flask_cors import cross_origin
 
 
+connection = mysql.connector.connect(host='localhost',port='3307',database='medicalPredictApp',user='root',password='mysql')
 
+cursor=connection.cursor()
 app = Flask(__name__)
+app.secret_key = "super secret key"
 # Data preparation, cleaning the text in the dataset
 
 def clean_txt(docs):
@@ -47,22 +52,39 @@ model = pickle.load(open('bagging_model', 'rb'))
 
 @app.route('/')
 def homepage():
-    return render_template('login.html')
+    return render_template('index.html')
 
-# @app.route('/home')
-# def hello():
-#     return """
-#     <div align= "center">
+@app.route('/login', methods =['GET','POST'])
+
+def login():
+    msg =''
+    if request.method == "POST":
+        email = request.form['email']
+        password = request.form['password']
+        cursor.execute('SELECT * FROM user WHERE email=%s AND password = %s',(email,password))
+        record = cursor.fetchone()
+        if record:
+            session['loggedin']=TRUE
+            session['username']=redord[1]
+            return redirect(url_for('/home')
+        else:
+             msg = 'Incorrect Email or password'
+    return render_template('index.html'msg=msg)
+
+@app.route('/home')
+def hello():
+    return """
+    <div align= "center">
         
-#         <iframe
-#         allow="microphone;"
-#         width="350"
-#         height="430"
-#         src="https://console.dialogflow.com/api-client/demo/embedded/ebcc1be7-015e-469f-be2d-2836d3f4d572">
-#         </iframe>
-#     </div>
+        <iframe
+        allow="microphone;"
+        width="350"
+        height="430"
+        src="https://console.dialogflow.com/api-client/demo/embedded/ebcc1be7-015e-469f-be2d-2836d3f4d572">
+        </iframe>
+    </div>
     
-#     """
+    """
 
 # geting and sending response to dialogflow
 @app.route('/webhook', methods=['POST'])
