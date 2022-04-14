@@ -69,7 +69,7 @@ def login():
     if request.method == "POST":
         email = request.form['email']
         password = request.form['password']
-        result = db.execute('SELECT * FROM user WHERE email=%s AND password = %s',(email,password))
+        result = db.execute('SELECT * FROM users WHERE email=%s AND password = %s',(email,password))
         record = result.fetchone()
         if record:
             session['loggedin']=TRUE
