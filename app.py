@@ -47,7 +47,7 @@ model = pickle.load(open('bagging_model', 'rb'))
 
 @app.route('/')
 def homepage():
-    return render_template('welcome.html')
+    return render_template('login.html')
 
 # @app.route('/home')
 # def hello():
