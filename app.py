@@ -68,9 +68,11 @@ def login():
         if record:
             session['loggedin']=TRUE
             session['username']=redord[1]
-            return redirect(url_for('/home')
         
-    msg = 'Incorrect Email or password'
+            return redirect(url_for('/home')
+        else:
+                            msg = 'Incorrect Email or password'       
+    
     return render_template('index.html'msg=msg)
 
 @app.route('/home')
