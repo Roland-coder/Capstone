@@ -2,6 +2,8 @@ import numpy as np
 from flask import Flask, request, make_response
 import json
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
+from flask import render_template, redirect
+import os
 import re
 import string
 
@@ -44,6 +46,10 @@ def clean_txt(docs):
 model = pickle.load(open('bagging_model', 'rb'))
 
 @app.route('/')
+def homepage():
+    return render_template('welcome.html')
+
+@app.route('/home')
 def hello():
     return """
     <div align= "center">
