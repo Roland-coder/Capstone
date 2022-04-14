@@ -1,8 +1,6 @@
 import numpy as np
 from flask import Flask, request, make_response,session,url_for
 import psycopg2
-
-import mysql.connector
 import json
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from flask import render_template, redirect
