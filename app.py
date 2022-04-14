@@ -2,6 +2,7 @@ import numpy as np
 from flask import Flask, request, make_response,session,url_for
 import psycopg2
 import json
+import mysql.connector
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from flask import render_template, redirect
 import os
@@ -15,8 +16,10 @@ import nltk
 
 
 from flask_cors import cross_origin
-DATABASE_URL = os.environ['postgres://wlnvcqrrmxbved:2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf@ec2-34-207-12-160.compute-1.amazonaws.com:5432/d90tl94u97uha4']
-connection = psycopg2.connect(DATABASE_URL, sslmode='require')
+# DATABASE_URL = os.environ['postgres://wlnvcqrrmxbved:2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf@ec2-34-207-12-160.compute-1.amazonaws.com:5432/d90tl94u97uha4']
+connection = mysql.connector.connect(host='ec2-34-207-12-160.compute-1.amazonaws.com',port='5432',database='d90tl94u97uha4', user='wlnvcqrrmxbved', password='2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf
+')
+
 
 
 cursor=connection.cursor()
