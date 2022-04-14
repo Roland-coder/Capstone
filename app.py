@@ -1,6 +1,5 @@
 import numpy as np
 from flask import Flask, request, make_response,session,url_for
-from flask_session import Session
 import psycopg2
 
 import mysql.connector
