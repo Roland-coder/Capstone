@@ -16,7 +16,7 @@ import nltk
 
 
 from flask_cors import cross_origin
-connection = mysql.connector.connect(host='ec2-34-207-12-160.compute-1.amazonaws.com',port='5432',
+# connection = mysql.connector.connect(host='ec2-34-207-12-160.compute-1.amazonaws.com',port='5432',
                                      database='d90tl94u97uha4', user='wlnvcqrrmxbved', 
                                      password='2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf')
 
@@ -56,24 +56,24 @@ model = pickle.load(open('bagging_model', 'rb'))
 def homepage():
     return render_template('index.html')
 
-@app.route('/login', methods =['GET','POST'])
+# @app.route('/login', methods =['GET','POST'])
 
-def login():
-    msg =''
-    if request.method == "POST":
-        email = request.form['email']
-        password = request.form['password']
-        cursor.execute('SELECT * FROM user WHERE email=%s AND password = %s',(email,password))
-        record = cursor.fetchone()
-        if record:
-            session['loggedin']=TRUE
-            session['username']=redord[1]
+# def login():
+#     msg =''
+#     if request.method == "POST":
+#         email = request.form['email']
+#         password = request.form['password']
+#         cursor.execute('SELECT * FROM user WHERE email=%s AND password = %s',(email,password))
+#         record = cursor.fetchone()
+#         if record:
+#             session['loggedin']=TRUE
+#             session['username']=redord[1]
         
-            return redirect(url_for('/home'))
-        else:
-            msg = 'Incorrect Email or password'       
+#             return redirect(url_for('/home'))
+#         else:
+#             msg = 'Incorrect Email or password'       
     
-    return render_template('index.html', msg=msg)
+#     return render_template('index.html', msg=msg)
 
 @app.route('/home')
 def hello():
