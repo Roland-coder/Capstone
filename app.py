@@ -21,10 +21,10 @@ from flask_cors import cross_origin
 #                                      database='d90tl94u97uha4', user='wlnvcqrrmxbved', 
 #                                      password='2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf')
 
-db_string = "postgres://wlnvcqrrmxbved:2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf@ec2-34-207-12-160.compute-1.amazonaws.com:5432/d90tl94u97uha4
-"
+db_string = "postgres://wlnvcqrrmxbved:2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf@ec2-34-207-12-160.compute-1.amazonaws.com:5432/d90tl94u97uha4"
 db = create_engine(db_string)
 
+db.execute("CREATE TABLE IF NOT EXISTS users ( user_id serial PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP )") 
 
 # cursor=connection.cursor()
 app = Flask(__name__)
@@ -64,22 +64,22 @@ def homepage():
 def homepage():
     return render_template('registration.html')
 
-# @app.route('/login', methods =['GET','POST'])
+@app.route('/login', methods =['GET','POST'])
 
-# def login():
-#     msg =''
-#     if request.method == "POST":
-#         email = request.form['email']
-#         password = request.form['password']
-#         cursor.execute('SELECT * FROM user WHERE email=%s AND password = %s',(email,password))
-#         record = cursor.fetchone()
-#         if record:
-#             session['loggedin']=TRUE
-#             session['username']=redord[1]
+def login():
+    msg =''
+    if request.method == "POST":
+        email = request.form['email']
+        password = request.form['password']
+        db.execute('SELECT * FROM user WHERE email=%s AND password = %s',(email,password))
+        record = db.fetchone()
+        if record:
+            session['loggedin']=TRUE
+            session['username']=redord[1]
         
-#             return redirect(url_for('/home'))
-#         else:
-#             msg = 'Incorrect Email or password'       
+            return redirect(url_for('/home'))
+        else:
+            msg = 'Incorrect Email or password'       
     
 #     return render_template('index.html', msg=msg)
 
