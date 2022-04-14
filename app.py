@@ -8,6 +8,7 @@ from flask import render_template, redirect
 import os
 import re
 import string
+from sqlalchemy import create_engine
 
 import pickle
 from spacy.lang.en.stop_words import STOP_WORDS
@@ -20,6 +21,9 @@ from flask_cors import cross_origin
 #                                      database='d90tl94u97uha4', user='wlnvcqrrmxbved', 
 #                                      password='2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf')
 
+db_string = "postgres://wlnvcqrrmxbved:2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf@ec2-34-207-12-160.compute-1.amazonaws.com:5432/d90tl94u97uha4
+"
+db = create_engine(db_string)
 
 
 # cursor=connection.cursor()
@@ -55,6 +59,10 @@ model = pickle.load(open('bagging_model', 'rb'))
 @app.route('/')
 def homepage():
     return render_template('index.html')
+
+@app.route('/registration')
+def homepage():
+    return render_template('registration.html')
 
 # @app.route('/login', methods =['GET','POST'])
 
