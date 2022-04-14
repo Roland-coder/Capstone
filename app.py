@@ -77,7 +77,8 @@ def homepage():
 
 @app.route('/home')
 def hello():
-    return render_template('home.html',session['username'])
+#     return render_template('home.html',session['username'])
+    return render_template('home.html')
 
 # geting and sending response to dialogflow
 @app.route('/webhook', methods=['POST'])
