@@ -24,7 +24,8 @@ from flask_cors import cross_origin
 db_string = "postgres://wlnvcqrrmxbved:2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf@ec2-34-207-12-160.compute-1.amazonaws.com:5432/d90tl94u97uha4"
 db = create_engine(db_string)
 
-db.execute("CREATE TABLE IF NOT EXISTS userss ( user_id serial PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 500 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP )") 
+db.execute("DROP TABLE userss;")
+db.execute("CREATE TABLE IF NOT EXISTS userss ( user_id serial PRIMARY KEY, username VARCHAR ( 500 ) UNIQUE NOT NULL, password VARCHAR ( 500 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP )") 
 
 # cursor=connection.cursor()
 app = Flask(__name__)
