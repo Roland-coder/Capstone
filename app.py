@@ -79,7 +79,7 @@ def login():
     if request.method == "POST":
         email = request.form['email']
         password = request.form['password'].encode('utf-8')
-        result = db.execute('SELECT * FROM users WHERE email=%s AND password = %s',(email,password))
+        result = db.execute('SELECT * FROM users WHERE email=%s AND password::bytea = %s',(email,password))
         record = result.fetchone()
         
         if record:
