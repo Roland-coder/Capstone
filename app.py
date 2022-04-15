@@ -72,7 +72,7 @@ def registration():
             password=request.form['password'].encode('utf-8')
             hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
             db.execute("INSERT into enduserss (username,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
-            session['loggedin']=TRUE
+            session['loggedin']=True
             session['username']=name
             return redirect(url_for('home'))
     return render_template('registration.html')
