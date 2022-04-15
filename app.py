@@ -59,27 +59,36 @@ model = pickle.load(open('bagging_model', 'rb'))
 def homepage():
     return render_template('index.html')
 
-@app.route('/registration')
+@app.route('/registration', methods=['GET','POST'])
 def regpage():
-    return render_template('registration.html')
+    if request.method == "GET":
+        return render_template('registration.html')
+    else:
+        name=request.form['name']
+        email=request.form['email']
+        password=request.form['password'].encode('utf-8')
+        hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
+        db.execute("INSERT into users (name,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
+        session['loggedin']=TRUE
+        session['username']=name
+        return redirect(url_for('home'))
 
 @app.route('/login', methods =['GET','POST'])
 def login():
     msg =''
     if request.method == "POST":
         email = request.form['email']
-        password = request.form['password']
+        password = request.form['password'].encode('utf-8')
         result = db.execute('SELECT * FROM users WHERE email=%s AND password = %s',(email,password))
         record = result.fetchone()
         
         if record:
-            session['loggedin']=TRUE
-            session['username']=record[1]
-        
-            return redirect(url_for('/home'))
+            if bcrypt.hashpw(password, result["password"].encode("utf-8")) == result["password"].encode("utf-8"):
+                session['loggedin']=TRUE
+                session['username']=record["name"]
+                return redirect(url_for('home'))
         else:
             msg = 'Incorrect Email or password'       
-            print('did not find record', file=sys.stderr)
     return render_template('index.html', msg=msg)
 
 @app.route('/home')
