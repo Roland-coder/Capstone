@@ -83,21 +83,6 @@ def registration():
 # def homeregpage():
 #     return render_template('index.html')
 
-@app.route('/registration__', methods=['GET','POST'])
-def regpage():
-    if request.method == "POST":
-        if request.form["password"] != request.form["password1"]:
-            return render_template('registration.html',msg="Passwords do not match")
-        else:
-            name=request.form['name']
-            email=request.form['email']
-            password=request.form['password'].encode('utf-8')
-            hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
-            db.execute("INSERT into enduserss (name,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
-            session['loggedin']=TRUE
-            session['username']=name
-            return redirect(url_for('home'))
-        return render_template('registration.html')
     
         
         
@@ -112,8 +97,8 @@ def login():
         record = result.fetchone()
         
         if record:
-            if bcrypt.hashpw(password, result["password"].encode("utf-8")) == result["password"].encode("utf-8"):
-                session['loggedin']=TRUE
+            if bcrypt.hashpw(password, bcrypt.gensalt()) == result["password"].encode("utf-8"):
+                session['loggedin']=True
                 session['username']=record["name"]
                 return redirect(url_for('home'))
         else:
