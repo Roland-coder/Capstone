@@ -65,17 +65,17 @@ def regpage():
         return render_template('registration.html')
     else:
         
-        if request.form["password"] != request.form["password1"]:
-            return render_template('registration',msg="Passwords do not match")
-        else:
-            name=request.form['name']
-            email=request.form['email']
-            password=request.form['password'].encode('utf-8')
-            hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
-            db.execute("INSERT into users (name,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
-            session['loggedin']=TRUE
-            session['username']=name
-            return redirect(url_for('home'))
+#         if request.form["password"] != request.form["password1"]:
+#             return render_template('registration',msg="Passwords do not match")
+#         else:
+        name=request.form['name']
+        email=request.form['email']
+        password=request.form['password'].encode('utf-8')
+        hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
+        db.execute("INSERT into users (name,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
+        session['loggedin']=TRUE
+        session['username']=name
+        return redirect(url_for('home'))
 
 @app.route('/login', methods =['GET','POST'])
 def login():
