@@ -97,13 +97,13 @@ def login():
         record = result.fetchone()
         
         if record:
-            if bcrypt.hashpw(password, bcrypt.gensalt()) == result["password"].encode("utf-8"):
+            if bcrypt.hashpw(password, bcrypt.gensalt()) == result["password"]:
                 session['loggedin']=True
                 session['username']=record["name"]
                 return redirect(url_for('home'))
         else:
             msg = 'Incorrect Email or password'       
-    return render_template('index.html', msg=msg)
+    return render_template('index.html', msg=result["password"])
 
 @app.route('/home')
 def home():
