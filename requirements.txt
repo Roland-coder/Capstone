@@ -32,3 +32,4 @@ sklearn
 psycopg2
 mysql-connector-python
 SQLAlchemy
+bcrypt
