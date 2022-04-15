@@ -126,6 +126,7 @@ def webhook():
     req = request.get_json(silent=True, force=True)
     res = processRequest(req)
     res = json.dumps(res)
+    
 
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
@@ -139,14 +140,20 @@ def processRequest(req):    # This method processes the incoming request
     
     intent = result.get("intent").get('displayName')
     symptom = clean_txt(symptom)
-    
+    drug_pres = {'Emotional pain' :"Tylenol", 'Hair falling out': "Minoxidil or Finasteride", 'Heart hurts' : "Thrombolytic drugs or Antidepressants",
+       'Infected wound' : "Cefuroxime", 'Foot ache': "Acetaminophen", 'Shoulder pain': "Ibuprofen or Acetaminophen",
+       'Injury from sports': "Ibuprofen", 'Skin issue':"Alclometasone", 'Stomach ache':"Aztreonam", 'Knee pain':"Acetaminophen",
+       'Joint pain': "Acetaminophen", 'Hard to breath' "Ipatropium bromide", 'Head ache' : "Ibuprofen or Aspirin", 'Body feels weak' "get a therapy",
+       'Feeling dizzy':"Benzodiazepines", 'Back pain': "Ibuprofen", 'Open wound': "A first aid antibiotic ointment such asBacitracin, Neosporin, Polysporin ", 'Internal pain':"Acetaminophen",
+       'Blurry vision' : "Biperiden", 'Acne' :"Tetracycline", 'Muscle pain': "Ibuprofen", 'Neck pain' :"acetaminophen", 'Cough' "dextromethorphan",
+       'Ear ache':"acetaminophen", 'Feeling cold':"diphenhydramine"}
     if (intent=='predict-intent'):
 #         for_pred = [clean_txt(symptom)]
         
         output = model.predict([symptom])[0]
 #         output = round(prediction[0], 2)       
        
-        fulfillmentText= "The right medical intent of what you are currently experiencing is:  {} ! ".format(output)
+        fulfillmentText= "The right medical intent of what you are currently experiencing is:  {} and a recommended treatment will be {} ! ".format(output, drug_pres[output])
 
         return {
             "fulfillmentText": fulfillmentText
