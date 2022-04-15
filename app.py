@@ -65,6 +65,16 @@ def registration():
     if request.method == "POST":
         if request.form['password'] != request.form['password1']:
             return render_template('registration.html', msg=msg)
+        else:
+            else:
+            name=request.form['name']
+            email=request.form['email']
+            password=request.form['password'].encode('utf-8')
+            hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
+            db.execute("INSERT into users (name,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
+            session['loggedin']=TRUE
+            session['username']=name
+            return redirect(url_for('home'))
     return render_template('registration.html')
 
 
@@ -111,7 +121,7 @@ def login():
     return render_template('index.html', msg=msg)
 
 @app.route('/home')
-def hello():
+def home():
 #     return render_template('home.html',session['username'])
     return render_template('home.html')
 
