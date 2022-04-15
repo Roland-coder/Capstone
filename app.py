@@ -66,7 +66,6 @@ def registration():
         if request.form['password'] != request.form['password1']:
             return render_template('registration.html', msg=msg)
         else:
-            else:
             name=request.form['name']
             email=request.form['email']
             password=request.form['password'].encode('utf-8')
