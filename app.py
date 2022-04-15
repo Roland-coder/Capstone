@@ -63,7 +63,7 @@ def homepage():
 def regpage():
     if request.method == "POST":
         if request.form["password"] != request.form["password1"]:
-            return render_template('registration',msg="Passwords do not match")
+            return render_template('registration.html',msg="Passwords do not match")
         else:
             name=request.form['name']
             email=request.form['email']
