@@ -61,10 +61,7 @@ def homepage():
 
 @app.route('/registration', methods=['GET','POST'])
 def regpage():
-    if request.method == "GET":
-        return render_template('registration.html')
-    else:
-        
+    if request.method == "POST":
         if request.form["password"] != request.form["password1"]:
             return render_template('registration',msg="Passwords do not match")
         else:
@@ -76,6 +73,10 @@ def regpage():
             session['loggedin']=TRUE
             session['username']=name
             return redirect(url_for('home'))
+    return render_template('registration.html')
+    
+        
+        
 
 @app.route('/login', methods =['GET','POST'])
 def login():
