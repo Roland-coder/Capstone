@@ -61,17 +61,22 @@ def homepage():
 
 @app.route('/registration', methods=['GET','POST'])
 def regpage():
-    if request.method == "GET":
-        return render_template('registration.html')
-    else:
-        name=request.form['name']
-        email=request.form['email']
-        password=request.form['password'].encode('utf-8')
-        hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
-        db.execute("INSERT into users (name,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
-        session['loggedin']=TRUE
-        session['username']=name
-        return redirect(url_for('home'))
+    if request.method == "POST":
+        if request.form["password"] != request.form["password1"]:
+            return render_template('registration.html',msg="Passwords do not match")
+        else:
+            name=request.form['name']
+            email=request.form['email']
+            password=request.form['password'].encode('utf-8')
+            hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
+            db.execute("INSERT into users (name,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
+            session['loggedin']=TRUE
+            session['username']=name
+            return redirect(url_for('home'))
+    return render_template('registration.html')
+    
+        
+        
 
 @app.route('/login', methods =['GET','POST'])
 def login():
