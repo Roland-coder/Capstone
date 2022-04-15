@@ -71,7 +71,7 @@ def registration():
             email=request.form['email']
             password=request.form['password'].encode('utf-8')
             hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
-            db.execute("INSERT into users (name,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
+            db.execute("INSERT into users (username,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
             session['loggedin']=TRUE
             session['username']=name
             return redirect(url_for('home'))
