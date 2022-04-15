@@ -64,7 +64,7 @@ def registration():
     msg ="passwords do not match"
     if request.method == "POST":
         if request.form['password'] != request.form['password1']:
-            return render_template('regsitration.html', msg=msg)
+            return render_template('registration.html', msg=msg)
     return render_template('registration.html')
 
 
