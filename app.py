@@ -15,6 +15,7 @@ import pickle
 from spacy.lang.en.stop_words import STOP_WORDS
 from nltk.stem import WordNetLemmatizer 
 import nltk
+import bcrypt
 
 
 from flask_cors import cross_origin
