@@ -24,7 +24,7 @@ from flask_cors import cross_origin
 db_string = "postgres://wlnvcqrrmxbved:2893e389d4a71557c25ca55b9a9602e60a75ec514cf497cfcee14291bbbc79bf@ec2-34-207-12-160.compute-1.amazonaws.com:5432/d90tl94u97uha4"
 db = create_engine(db_string)
 
-db.execute("CREATE TABLE IF NOT EXISTS users ( user_id serial PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP )") 
+db.execute("CREATE TABLE IF NOT EXISTS userss ( user_id serial PRIMARY KEY, username VARCHAR ( 50 ) UNIQUE NOT NULL, password VARCHAR ( 50 ) NOT NULL, email VARCHAR ( 255 ) UNIQUE NOT NULL, created_on TIMESTAMP NOT NULL, last_login TIMESTAMP )") 
 
 # cursor=connection.cursor()
 app = Flask(__name__)
@@ -71,7 +71,7 @@ def registration():
             email=request.form['email']
             password=request.form['password'].encode('utf-8')
             hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
-            db.execute("INSERT into users (username,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
+            db.execute("INSERT into userss (username,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
             session['loggedin']=TRUE
             session['username']=name
             return redirect(url_for('home'))
@@ -93,7 +93,7 @@ def regpage():
             email=request.form['email']
             password=request.form['password'].encode('utf-8')
             hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
-            db.execute("INSERT into users (name,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
+            db.execute("INSERT into userss (name,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
             session['loggedin']=TRUE
             session['username']=name
             return redirect(url_for('home'))
@@ -108,7 +108,7 @@ def login():
     if request.method == "POST":
         email = request.form['email']
         password = request.form['password'].encode('utf-8')
-        result = db.execute('SELECT * FROM users WHERE email=%s AND password::bytea = %s',(email,password))
+        result = db.execute('SELECT * FROM userss WHERE email=%s AND password::bytea = %s',(email,password))
         record = result.fetchone()
         
         if record:
