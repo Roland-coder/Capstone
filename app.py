@@ -60,7 +60,7 @@ def homepage():
     return render_template('index.html')
 
 @app.route('/registration', methods=['GET','POST'])
-def registerpage():
+def registration():
     msg ="passwords do not match"
     if request.method == "POST":
         if request.form['password'] != request.form['password1']:
