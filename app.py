@@ -59,11 +59,15 @@ model = pickle.load(open('bagging_model', 'rb'))
 def homepage():
     return render_template('index.html')
 
+@app.route('/registration')
+def registerpage():
+    return render_template('registration.html')
+
 # @app.route('/registration')
 # def homeregpage():
 #     return render_template('index.html')
 
-@app.route('/registration', methods=['GET','POST'])
+@app.route('/registration__', methods=['GET','POST'])
 def regpage():
     if request.method == "POST":
         if request.form["password"] != request.form["password1"]:
