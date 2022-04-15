@@ -102,8 +102,9 @@ def login():
                 session['username']=record["name"]
                 return redirect(url_for('home'))
         else:
-            msg = 'Incorrect Email or password'       
-    return render_template('index.html', msg=result["password"])
+#             msg = 'Incorrect Email or password' 
+            msg = result["password"]
+    return render_template('index.html', msg=msg)
 
 @app.route('/home')
 def home():
