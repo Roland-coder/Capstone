@@ -15,7 +15,7 @@ import pickle
 from spacy.lang.en.stop_words import STOP_WORDS
 from nltk.stem import WordNetLemmatizer 
 import nltk
-import bcrypt
+# import bcrypt
 
 
 from flask_cors import cross_origin
@@ -69,9 +69,9 @@ def registration():
         else:
             name=request.form['name']
             email=request.form['email']
-            password=request.form['password'].encode('utf-8')
-            hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
-            db.execute("INSERT into enduserss (username,email,password) VALUES (%s,%s,%s)",(name,email,hash_password))
+            password=request.form['password']
+#             hash_password = bcrypt.hashpw(password,bcrypt.gensalt())
+            db.execute("INSERT into enduserss (username,email,password) VALUES (%s,%s,%s)",(name,email,password))
             session['loggedin']=True
             session['username']=name
             return redirect(url_for('home'))
@@ -92,12 +92,12 @@ def login():
     msg =''
     if request.method == "POST":
         email = request.form['email']
-        password = request.form['password'].encode('utf-8')
+        password = request.form['password']
         result = db.execute('SELECT * FROM enduserss WHERE email=%s AND password::bytea = %s',(email,password))
         record = result.fetchone()
         
         if record:
-            if bcrypt.hashpw(password, bcrypt.gensalt()) == result["password"]:
+            if password == result["password"]:
                 session['loggedin']=True
                 session['username']=record["name"]
                 return redirect(url_for('home'))
